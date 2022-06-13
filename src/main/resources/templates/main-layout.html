@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Winterhold Library</title>
+    <link rel="shortcut icon" th:href="@{/Winterhold.png}" type="image/x-icon">
+    <!--css-->
+    <link rel="stylesheet" th:href="@{/resources/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/site.css}">
+</head>
+
+<body>
+
+<nav th:fragment="navigation">
+    <div class="company-logo">
+        <img th:src="@{/resources/image/Winterhold.png}" alt="Basilisk">
+        <h1>
+            <span class="bold">WINTERHOLD</span> Library
+        </h1>
+    </div>
+
+    <a th:href="@{/}" class="">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <a th:href="@{/author}" class="">
+        <i class="fas fa-home"></i>
+        <span>Authors</span>
+    </a>
+
+    <a th:href="@{/category}" class="">
+        <i class="fas fa-home"></i>
+        <span>Categories</span>
+    </a>
+
+    <a th:href="@{/customer}" class="">
+        <i class="fas fa-home"></i>
+        <span>Customers</span>
+    </a>
+
+    <a th:href="@{/loan}" class="">
+        <i class="fas fa-home"></i>
+        <span>Loans</span>
+    </a>
+</nav>
+
+<header th:fragment="header(breadCrumbs)">
+    <div class="bread-crumbs">
+        <span th:text="${breadCrumbs}"></span>
+    </div>
+    <!--SECURITY: Selidiki lagi tentang csrf-->
+<!--    <div class="user-wrapper">-->
+<!--        <div class="user">-->
+<!--            <span class="full-name" sec:authentication="name">anonymous</span>-->
+<!--            <span class="role" sec:authentication="principal.authorities">guest</span>-->
+<!--        </div>-->
+<!--        <div class="sign-out">-->
+<!--            <form th:attr="action=@{/logout}" method="POST">-->
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+<!--                <button type="submit"><i class="fas fa-sign-out-alt"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+</header>
+
+<footer th:fragment="footer">
+    Copyrights &copy; 2022
+    <span class="author">Melvin Brilliant</span>
+    All rights reserved.
+</footer>
+
+<th:block th:fragment="javascript">
+    <script th:src="@{resources/js/site.js}"></script>
+</th:block>
+
+</body>
+</html>
