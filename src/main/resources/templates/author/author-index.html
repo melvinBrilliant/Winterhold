@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body class="main-body">
+<nav th:replace="~{main-layout :: navigation}"></nav>
+<header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+
+<main>
+    <div class="grid-container">
+        <form th:action="@{/author/index(fullName = ${fullName})}" method="get" class="filter">
+            <input type="text" name="fullName" placeholder="fullName.." th:value="${fullName}">
+            <button type="submit" class="blue-button">Search</button>
+        </form>
+
+        <a href="" class="blue-button create-button">Insert New Author</a>
+        <table>
+            <tbody>
+            <tr>
+                <th>Action</th>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Status</th>
+                <th>Education</th>
+            </tr>
+            <tr th:each="authors : ${author}">
+                <td>
+                    <a href="" class="blue-button update-button">Books</a>
+                    <a href="" class="blue-button">Edit</a>
+                    <a href="" class="blue-button">Delete</a>
+                </td>
+                <td th:text="${authors.fullName}"></td>
+                <td th:text="${authors.age}"></td>
+                <td th:text="${authors.status}"></td>
+                <td th:text="${authors.education}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div class="pagination">
+                        <div th:text="|Page ${page} of ${totalPage}|"></div>
+                        <div>
+                            <a th:each="pageLoop : ${#numbers.sequence(1, (totalPage < 1) ? 1 : totalPage)}"
+                               th:href="@{/author/index(page=${pageLoop}, id=${id}, fullName=${fullName}, id=${id})}"
+                               th:text="${pageLoop}">
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{main-layout :: footer}"></footer>
+</body>
+</html>
