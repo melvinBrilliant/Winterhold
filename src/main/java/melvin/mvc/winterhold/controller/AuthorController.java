@@ -25,8 +25,8 @@ public class AuthorController {
                         @RequestParam(defaultValue = "") String fullName,
                         Model model) {
         Page<AuthorDto> allAuthor = service.findAllAuthor(page, fullName);
-        List<AuthorGridDto> authorGrid =AuthorGridDto.toList(allAuthor.getContent());
-        model.addAttribute("author", authorGrid);
+        List<AuthorGridDto> authorGrid = AuthorGridDto.toList(allAuthor.getContent());
+        model.addAttribute("authors", authorGrid);
         model.addAttribute("page", page);
         model.addAttribute("totalPage", allAuthor.getTotalPages());
         model.addAttribute("fullName", fullName);
