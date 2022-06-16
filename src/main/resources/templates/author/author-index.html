@@ -14,7 +14,7 @@
 
 <main>
     <div class="grid-container">
-        <form th:action="@{/author/index(fullName = ${fullName})}" method="get" class="filter">
+        <form th:action="@{/author/index}" method="get" class="filter">
             <input type="text" name="fullName" placeholder="Author's full name.." th:value="${fullName}">
             <button type="submit" class="blue-button">Search</button>
         </form>
