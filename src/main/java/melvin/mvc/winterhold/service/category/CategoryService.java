@@ -10,12 +10,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryService {
+public class CategoryService implements ICategoryService{
 
     @Autowired
     private CategoryRepository categoryRepository;
     private final int PAGE_LIMIT = 5;
 
+    @Override
     public Page<CategoryGridDto> findAllCategory(Integer page, String categoryName) {
         Pageable pageable = PageRequest.of(page, PAGE_LIMIT, Sort.by("id"));
         return categoryRepository.findAll(categoryName, pageable);
