@@ -1,7 +1,7 @@
 package melvin.mvc.winterhold.controller;
 
-import melvin.mvc.winterhold.dto.customer.CustomerGridDto;
-import melvin.mvc.winterhold.service.customer.CustomerService;
+import melvin.mvc.winterhold.dto.loan.LoanGridDto;
+import melvin.mvc.winterhold.service.loan.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -13,24 +13,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("customer")
-public class CustomerController {
+@RequestMapping("loan")
+public class LoanController {
     @Autowired
-    private CustomerService service;
+    private LoanService service;
 
     @GetMapping("index")
     public String index(@RequestParam(defaultValue = "1") int page,
-                        @RequestParam(defaultValue = "") String membershipNumber,
+                        @RequestParam(defaultValue = "") String bookTitle,
                         @RequestParam(defaultValue = "") String customerName,
                         Model model) {
-        Page<CustomerGridDto> allCustomers = service.findAllCustomer(page, membershipNumber, customerName);
-        List<CustomerGridDto> customerGrid = allCustomers.getContent();
-        model.addAttribute("customers", customerGrid);
-        model.addAttribute("membershipNumber", membershipNumber);
+        Page<LoanGridDto> allLoans = service.findAllLoans(page, bookTitle, customerName);
+        List<LoanGridDto> loanGrid = allLoans.getContent();
+        model.addAttribute("loans", loanGrid);
+        model.addAttribute("bookTitle", bookTitle);
         model.addAttribute("customerName", customerName);
         model.addAttribute("page", page);
-        model.addAttribute("totalPage", allCustomers.getTotalPages());
-        model.addAttribute("breadCrumbs", "CUSTOMER / INDEX");
-        return "customer/customer-index";
+        model.addAttribute("totalPage", allLoans.getTotalPages());
+        model.addAttribute("breadCrumbs", "LOAN / INDEX");
+        return "loan/loan-index";
     }
+
 }
