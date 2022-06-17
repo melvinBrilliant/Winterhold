@@ -50,12 +50,15 @@ public class AuthorController {
     @PostMapping("upsert")
     public String upsert(@Valid @ModelAttribute("author") UpsertAuthorDto author,
                          BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
                          Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("author", author);
             return "author/author-form";
         }
         service.saveAuthor(author);
+        redirectAttributes.addFlashAttribute("SUCCESS",
+                "Author's data has been saved");
         return "redirect:/author/index";
     }
 
