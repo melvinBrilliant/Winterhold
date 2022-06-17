@@ -9,63 +9,67 @@
 </head>
 
 <body class="main-body">
-<nav th:replace="~{main-layout :: navigation}"></nav>
-<header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
 
-<main>
-    <div class="grid-container">
-        <form th:action="@{/category/index}" method="get" class="filter">
-            <input type="text" name="categoryName" placeholder="Book category name.." th:value="${categoryName}">
-            <button type="submit" class="blue-button">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
+    <main>
+        <div class="grid-container">
+            <form th:action="@{/category/index}" method="get" class="filter">
+                <input type="text" name="categoryName" placeholder="Book category name.." th:value="${categoryName}">
+                <button type="submit" class="blue-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
 
-        <a href="" class="blue-button create-button">Insert New Category</a>
-        <table>
-            <tbody>
-            <tr>
-                <th>Action</th>
-                <th>Category</th>
-                <th>Floor</th>
-                <th>Isle</th>
-                <th>Bay</th>
-                <th>Total Books</th>
-            </tr>
-            <tr th:each="category : ${categories}">
-                <td>
-                    <a href="" class="blue-button">Books</a>
-                    <a href="" class="blue-button">Edit</a>
-                    <a href="" class="blue-button">Delete</a>
-                </td>
-                <td th:text="${category.categoryName}"></td>
-                <td th:text="${category.floor}"></td>
-                <td th:text="${category.isle}"></td>
-                <td th:text="${category.bay}"></td>
-                <td th:text="${category.totalBooks}"></td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="6">
-                    <div class="pagination">
-                        <div th:text="|Page ${page} of ${totalPage}|"></div>
-                        <div>
-                            <a th:each="pageLoop : ${#numbers.sequence(1, (totalPage < 1) ? 1 : totalPage)}"
-                               th:href="@{/category/index(page=${pageLoop}, id=${id}, fullName=${fullName}, id=${id})}"
-                               th:text="${pageLoop}">
-                            </a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
+            <a th:href="@{/category/upsert-form}" class="blue-button create-button">Insert New Category</a>
+            <div class="field-validation-error" th:if="${ERROR}" th:text="${ERROR}"></div>
+            <div class="field-validation-success" th:if="${SUCCESS}" th:text="${SUCCESS}"></div>
 
-    </div>
-</main>
-<footer th:replace="~{main-layout :: footer}"></footer>
-<th:block th:replace="~{main-layout :: javascript}"></th:block>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Action</th>
+                        <th>Category</th>
+                        <th>Floor</th>
+                        <th>Isle</th>
+                        <th>Bay</th>
+                        <th>Total Books</th>
+                    </tr>
+                    <tr th:each="category : ${categories}">
+                        <td>
+                            <a href="" class="blue-button">Books</a>
+                            <a th:href="@{/category/upsert-form(categoryName = ${category.categoryName})}"
+                               class="blue-button">Edit</a>
+                            <a href="" class="blue-button">Delete</a>
+                        </td>
+                        <td th:text="${category.categoryName}"></td>
+                        <td th:text="${category.floor}"></td>
+                        <td th:text="${category.isle}"></td>
+                        <td th:text="${category.bay}"></td>
+                        <td th:text="${category.totalBooks}"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <div class="pagination">
+                                <div th:text="|Page ${page} of ${totalPage}|"></div>
+                                <div>
+                                    <a th:each="pageLoop : ${#numbers.sequence(1, (totalPage < 1) ? 1 : totalPage)}"
+                                       th:href="@{/category/index(page=${pageLoop}, id=${id}, fullName=${fullName}, id=${id})}"
+                                       th:text="${pageLoop}">
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </main>
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
 
 </body>
 </html>

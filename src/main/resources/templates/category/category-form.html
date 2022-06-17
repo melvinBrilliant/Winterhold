@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="main-body">
+
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+
+    <main>
+        <form th:action="@{/category/upsert}" th:object="${category}" method="post" class="upsert-form">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Category Name*: </label>
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{categoryName}" name="categoryName">
+                            <div class="field-validation-error" th:errors="*{categoryName}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>FLoor*: </label>
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{floor}" name="floor">
+                            <div class="field-validation-error" th:errors="*{floor}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Isle*: </label>
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{isle}" name="isle">
+                            <div class="field-validation-error" th:errors="*{isle}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Bay*: </label>
+                        </td>
+                        <td>
+                            <input type="text" th:field="*{bay}" name="bay">
+                            <div class="field-validation-error" th:errors="*{bay}"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="blue-button create-button">SAVE</button>
+        </form>
+    </main>
+
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
 
 </body>
 </html>
