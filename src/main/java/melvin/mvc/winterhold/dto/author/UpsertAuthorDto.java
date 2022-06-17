@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,9 +15,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UpsertAuthorDto implements Serializable {
     private Long id;
-    @NotNull(message = "Title can not be empty")
+    @NotBlank(message = "Title can not be empty")
     private String title;
-    @NotNull(message = "First Name can not be empty")
+    @NotBlank(message = "First Name can not be empty")
     private String firstName;
     private String lastName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

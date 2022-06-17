@@ -22,6 +22,7 @@
                         </td>
                         <td>
                             <input type="text" th:field="*{title}" name="title">
+                            <div class="field-validation-error" th:errors="*{title}"></div>
                         </td>
                     </tr>
                     <tr>
@@ -30,6 +31,7 @@
                         </td>
                         <td>
                             <input type="text" th:field="*{firstName}" name="firstName">
+                            <div class="field-validation-error" th:errors="*{firstName}"></div>
                         </td>
                     </tr>
                     <tr>
@@ -46,6 +48,7 @@
                         </td>
                         <td>
                             <input type="text" th:field="*{birthDate}" name="birthDate">
+                            <div class="field-validation-error" th:errors="*{birthDate}"></div>
                         </td>
                     </tr>
                     <tr>

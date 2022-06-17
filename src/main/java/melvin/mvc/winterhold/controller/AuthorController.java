@@ -53,12 +53,17 @@ public class AuthorController {
                          RedirectAttributes redirectAttributes,
                          Model model) {
         if (bindingResult.hasErrors()) {
+            if (bindingResult.getRawFieldValue("id") == null) {
+                model.addAttribute("breadCrumbs", "AUTHOR / INSERT NEW AUTHOR");
+            } else {
+                model.addAttribute("breadCrumbs", "AUTHOR / UPDATE AUTHOR");
+            }
             model.addAttribute("author", author);
             return "author/author-form";
         }
         service.saveAuthor(author);
         redirectAttributes.addFlashAttribute("SUCCESS",
-                "Author's data has been saved");
+                "Author's data have been saved");
         return "redirect:/author/index";
     }
 
