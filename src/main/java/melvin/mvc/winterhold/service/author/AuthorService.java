@@ -54,4 +54,9 @@ public class AuthorService implements IAuthorService{
                 author.getSummary()
         );
     }
+
+    @Override
+    public void deleteAuthorById(Long id) {
+        authorRepository.deleteById(id);
+    }
 }

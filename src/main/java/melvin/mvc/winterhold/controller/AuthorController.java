@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -55,6 +56,20 @@ public class AuthorController {
             return "author/author-form";
         }
         service.saveAuthor(author);
+        return "redirect:/author/index";
+    }
+
+    @GetMapping("delete")
+    public String delete(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+        if (id != null) {
+            try {
+                service.deleteAuthorById(id);
+                redirectAttributes.addFlashAttribute("SUCCESS", "Author has been deleted");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("ERROR",
+                        "Author's book still available in this library, can not delete author!");
+            }
+        }
         return "redirect:/author/index";
     }
 }

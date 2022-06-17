@@ -20,6 +20,9 @@
         </form>
 
         <a th:href="@{/author/upsert-form}" class="blue-button create-button">Insert New Author</a>
+        <div class="field-validation-error" th:if="${ERROR}" th:text="${ERROR}"></div>
+        <div class="field-validation-success" th:if="${SUCCESS}" th:text="${SUCCESS}"></div>
+
         <table>
             <tbody>
             <tr>
@@ -33,7 +36,7 @@
                 <td>
                     <a href="" class="blue-button update-button">Books</a>
                     <a th:href="@{/author/upsert-form(id = ${author.id})}" class="blue-button">Edit</a>
-                    <a href="" class="blue-button">Delete</a>
+                    <a th:href="@{/author/delete(id = ${author.id})}" class="blue-button">Delete</a>
                 </td>
                 <td th:text="${author.fullName}"></td>
                 <td th:text="${author.age}"></td>

@@ -8,4 +8,5 @@ public interface IAuthorService {
     Page<AuthorDto> findAllAuthor(Integer page, String fullName);
     void saveAuthor(UpsertAuthorDto authorDto);
     UpsertAuthorDto findAuthorById(Long id);
+    void deleteAuthorById(Long id);
 }
