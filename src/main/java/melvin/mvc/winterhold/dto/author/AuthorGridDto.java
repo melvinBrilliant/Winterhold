@@ -3,7 +3,6 @@ package melvin.mvc.winterhold.dto.author;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import melvin.mvc.winterhold.model.Author;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorGridDto {
+    private Long id;
     private String fullName;
     private Integer age;
     private String status;
@@ -22,6 +22,7 @@ public class AuthorGridDto {
 
         for (AuthorDto author : authors) {
             result.add(new AuthorGridDto(
+                    author.getId(),
                     author.fetchFullName(),
                     author.fetchAge(),
                     author.isDeceased(),

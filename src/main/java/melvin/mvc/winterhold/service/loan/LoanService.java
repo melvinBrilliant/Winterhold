@@ -10,11 +10,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoanService {
+public class LoanService implements ILoanService{
     @Autowired
     private LoanRepository loanRepository;
     private final int PAGE_LIMIT = 5;
 
+    @Override
     public Page<LoanGridDto> findAllLoans(Integer page, String bookTitle, String customerName) {
         Pageable pageable = PageRequest.of(page, PAGE_LIMIT, Sort.by("id"));
         return loanRepository.findAll(bookTitle, customerName, pageable);

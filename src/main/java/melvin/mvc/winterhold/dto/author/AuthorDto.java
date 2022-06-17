@@ -18,7 +18,7 @@ public class AuthorDto implements Serializable {
     private final String summary;
 
     public String fetchFullName() {
-        return firstName + " " + lastName;
+        return title + ". " +  firstName + " " + lastName;
     }
 
     public Integer fetchAge() {

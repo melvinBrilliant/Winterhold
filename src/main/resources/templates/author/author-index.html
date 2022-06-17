@@ -19,7 +19,7 @@
             <button type="submit" class="blue-button">Search</button>
         </form>
 
-        <a href="" class="blue-button create-button">Insert New Author</a>
+        <a th:href="@{/author/upsert-form}" class="blue-button create-button">Insert New Author</a>
         <table>
             <tbody>
             <tr>
@@ -32,7 +32,7 @@
             <tr th:each="author : ${authors}">
                 <td>
                     <a href="" class="blue-button update-button">Books</a>
-                    <a href="" class="blue-button">Edit</a>
+                    <a th:href="@{/author/upsert-form(id = ${author.id})}" class="blue-button">Edit</a>
                     <a href="" class="blue-button">Delete</a>
                 </td>
                 <td th:text="${author.fullName}"></td>
