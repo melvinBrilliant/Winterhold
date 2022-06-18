@@ -40,7 +40,8 @@
                             <a href="" class="blue-button">Books</a>
                             <a th:href="@{/category/upsert-form(categoryName = ${category.categoryName})}"
                                class="blue-button">Edit</a>
-                            <a href="" class="blue-button">Delete</a>
+                            <a th:href="@{/category/delete(categoryName = ${category.categoryName})}"
+                               class="blue-button">Delete</a>
                         </td>
                         <td th:text="${category.categoryName}"></td>
                         <td th:text="${category.floor}"></td>
