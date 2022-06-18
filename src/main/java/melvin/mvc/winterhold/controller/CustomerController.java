@@ -83,4 +83,21 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
+    @GetMapping("extend")
+    public String extend(@RequestParam String membershipNumber, RedirectAttributes redirectAttributes) {
+        String customerName = service.findCustomerById(membershipNumber).getFirstName() + "'s";
+
+        if (membershipNumber != null) { // membershipNumber = id
+            try {
+                service.extendMembership(membershipNumber);
+                redirectAttributes.addFlashAttribute("SUCCESS",
+                        String.format("Successfully extending %s membership", customerName));
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("ERROR",
+                        String.format("Failed to extend %s membership", customerName));
+            }
+        }
+        return "redirect:/customer/index";
+    }
+
 }

@@ -59,4 +59,16 @@ public class CustomerService implements ICustomerService{
     public void deleteCustomerById(String membershipNumber) {
         customerRepository.deleteById(membershipNumber);
     }
+
+    @Override
+    public void extendMembership(String membershipNumber) {
+        Customer customer = customerRepository.findById(membershipNumber)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        LocalDate newExpireDate = customer.getMembershipExpireDate().plusYears(2);
+        customer.setMembershipExpireDate(
+                newExpireDate
+        );
+        customerRepository.save(customer);
+    }
 }

@@ -35,9 +35,12 @@
                     </tr>
                     <tr th:each="customer : ${customers}">
                         <td>
-                            <a th:href="@{/customer/upsert-form(membershipNumber = ${customer.membershipNumber})}" class="blue-button">Edit</a>
-                            <a th:href="@{/customer/delete(membershipNumber = ${customer.membershipNumber})}" class="blue-button">Delete</a>
-                            <a href="" class="blue-button">Extend</a>
+                            <a th:href="@{/customer/upsert-form(membershipNumber = ${customer.membershipNumber})}"
+                               class="blue-button">Edit</a>
+                            <a th:href="@{/customer/delete(membershipNumber = ${customer.membershipNumber})}"
+                               class="blue-button">Delete</a>
+                            <a th:href="@{/customer/extend(membershipNumber = ${customer.membershipNumber})}"
+                               class="blue-button">Extend</a>
                         </td>
                         <td>
                             <a href="" th:text="${customer.membershipNumber}"></a>

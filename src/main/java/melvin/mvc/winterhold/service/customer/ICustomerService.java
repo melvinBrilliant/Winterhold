@@ -9,4 +9,5 @@ public interface ICustomerService {
     void saveCustomer(UpsertCustomerDto customerDto);
     UpsertCustomerDto findCustomerById(String membershipNumber); // membershipNumber = id
     void deleteCustomerById(String membershipNumber);
+    void extendMembership(String membershipNumber);
 }
