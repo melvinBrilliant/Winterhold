@@ -1,15 +1,17 @@
 package melvin.mvc.winterhold.controller;
 
 import melvin.mvc.winterhold.dto.customer.CustomerGridDto;
+import melvin.mvc.winterhold.dto.customer.UpsertCustomerDto;
 import melvin.mvc.winterhold.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -33,4 +35,52 @@ public class CustomerController {
         model.addAttribute("breadCrumbs", "CUSTOMER / INDEX");
         return "customer/customer-index";
     }
+
+    @GetMapping("upsert-form")
+    public String upsertForm(@RequestParam(required = false) String membershipNumber, Model model) {
+        if (membershipNumber != null) { // membershipNumber = id
+            model.addAttribute("customer", service.findCustomerById(membershipNumber));
+            model.addAttribute("breadCrumbs", "CUSTOMER / UPDATE CUSTOMER");
+        } else {
+            model.addAttribute("customer", new UpsertCustomerDto());
+            model.addAttribute("breadCrumbs", "CUSTOMER / INSERT NEW CUSTOMER");
+        }
+        return "customer/customer-form";
+    }
+
+    @PostMapping("upsert")
+    public String upsert(@Valid @ModelAttribute("customer") UpsertCustomerDto customer,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.getRawFieldValue("membershipNumber") == "") {
+                model.addAttribute("breadCrumbs", "CUSTOMER / INSERT NEW CUSTOMER");
+            } else {
+                model.addAttribute("breadCrumbs", "CUSTOMER / UPDATE CUSTOMER");
+            }
+            model.addAttribute("customer", customer);
+            return "customer/customer-form";
+        }
+        service.saveCustomer(customer);
+        redirectAttributes.addFlashAttribute("SUCCESS",
+                "Customer's data have been saved");
+        return "redirect:/customer/index";
+    }
+
+    @GetMapping("delete")
+    public String delete(@RequestParam String membershipNumber, RedirectAttributes redirectAttributes) {
+        if (membershipNumber != null) { // membershipNumber = id
+            try {
+                service.deleteCustomerById(membershipNumber);
+                redirectAttributes.addFlashAttribute("SUCCESS",
+                        "Customer has been deleted");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("ERROR",
+                        "This customer has not returned the books. Can not delete customer");
+            }
+        }
+        return "redirect:/customer/index";
+    }
+
 }

@@ -12,17 +12,16 @@
     <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
 
     <main>
-        <form th:action="@{/author/upsert}" th:object="${author}" method="post" class="upsert-form">
-            <input th:field="*{id}" type="hidden">
+        <form th:action="@{/customer/upsert}" th:object="${customer}" method="post" class="upsert-form">
             <table>
                 <tbody>
                     <tr>
                         <td>
-                            <label>Title*: </label>
+                            <label>Membership Number*: </label>
                         </td>
                         <td>
-                            <input type="text" th:field="*{title}" name="title">
-                            <div class="field-validation-error" th:errors="*{title}"></div>
+                            <input type="text" th:field="*{membershipNumber}" name="membershipNumber">
+                            <div class="field-validation-error" th:errors="*{membershipNumber}"></div>
                         </td>
                     </tr>
                     <tr>
@@ -40,6 +39,7 @@
                         </td>
                         <td>
                             <input type="text" th:field="*{lastName}" name="lastName">
+                            <div class="field-validation-error" th:errors="*{lastName}"></div>
                         </td>
                     </tr>
                     <tr>
@@ -53,33 +53,36 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>Deceased Date: </label>
+                            <label>Gender* :</label>
                         </td>
                         <td>
-                            <input type="date" th:field="*{deceasedDate}" name="deceasedDate">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>Education: </label>
-                        </td>
-                        <td>
-                            <input type="text" th:field="*{education}" name="education">
+                            <input type="radio" name="gender" class="custom-control-input" value="Male" th:field="*{gender}">
+                            <label>Male</label>
+                            <input type="radio" name="gender" class="custom-control-input" value="Female" th:field="*{gender}">
+                            <label>Female</label>
+                            <div class="field-validation-error" th:errors="*{gender}"></div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label>Summary: </label>
+                            <label>Phone: </label>
                         </td>
                         <td>
-                            <textarea name="summary" th:field="*{summary}"></textarea>
+                            <input type="text" name="phone" th:field="*{phone}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Address: </label>
+                        </td>
+                        <td>
+                            <textarea th:field="*{address}"></textarea>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button type="submit" class="blue-button create-button">SAVE</button>
+            <button class="blue-button" type="submit">SAVE</button>
         </form>
-
     </main>
 
     <footer th:replace="~{main-layout :: footer}"></footer>

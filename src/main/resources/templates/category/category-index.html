@@ -57,7 +57,7 @@
                                 <div th:text="|Page ${page} of ${totalPage}|"></div>
                                 <div>
                                     <a th:each="pageLoop : ${#numbers.sequence(1, (totalPage < 1) ? 1 : totalPage)}"
-                                       th:href="@{/category/index(page=${pageLoop}, id=${id}, fullName=${fullName}, id=${id})}"
+                                       th:href="@{/category/index(page=${pageLoop}, id=${categoryName}, floor=${floor}"
                                        th:text="${pageLoop}">
                                     </a>
                                 </div>
