@@ -3,6 +3,7 @@ package melvin.mvc.winterhold.controller;
 import melvin.mvc.winterhold.dto.author.AuthorDto;
 import melvin.mvc.winterhold.dto.author.AuthorGridDto;
 import melvin.mvc.winterhold.dto.author.UpsertAuthorDto;
+import melvin.mvc.winterhold.dto.book.BookByAuthorDetailsDto;
 import melvin.mvc.winterhold.service.author.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,5 +80,32 @@ public class AuthorController {
             }
         }
         return "redirect:/author/index";
+    }
+
+    @GetMapping("books")
+    public String authorBooks(@RequestParam(required = false) Long id,
+                              @RequestParam(defaultValue = "1") int page,
+                              Model model) {
+        UpsertAuthorDto author = service.findAuthorById(id);
+        String fullName = String.format("%s. %s %s",
+                author.getTitle(),
+                author.getFirstName(),
+                author.getLastName());
+        String authorBirthDate = service.dateFormatIndonesia(author.getBirthDate());
+        String authorDeceasedDate = author.getDeceasedDate() == null?
+                "-" : service.dateFormatIndonesia(author.getDeceasedDate());
+        Page<BookByAuthorDetailsDto> authorBooks = service.findBooksByAuthor(id, page);
+        List<BookByAuthorDetailsDto> authorBooksGrid = authorBooks.getContent();
+
+        model.addAttribute("author", author);
+        model.addAttribute("fullName", fullName);
+        model.addAttribute("birthDate", authorBirthDate);
+        model.addAttribute("deceasedDate", authorDeceasedDate);
+        model.addAttribute("books", authorBooksGrid);
+        model.addAttribute("breadCrumbs", "AUTHOR'S BOOK(S)");
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", authorBooks.getTotalPages());
+
+        return "author/author-book";
     }
 }

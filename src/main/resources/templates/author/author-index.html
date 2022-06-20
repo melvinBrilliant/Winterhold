@@ -34,7 +34,7 @@
             </tr>
             <tr th:each="author : ${authors}">
                 <td>
-                    <a href="" class="blue-button update-button">Books</a>
+                    <a th:href="@{/author/books(id = ${author.id})}" class="blue-button update-button">Books</a>
                     <a th:href="@{/author/upsert-form(id = ${author.id})}" class="blue-button">Edit</a>
                     <a th:href="@{/author/delete(id = ${author.id})}" class="blue-button">Delete</a>
                 </td>

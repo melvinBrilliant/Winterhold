@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main-body">
+
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+
+    <main>
+        <form class="upsert-form">
+            <table th:object="${author}">
+                <tr>
+                    <td>
+                        <label>Name: </label>
+                    </td>
+                    <td th:text="${fullName}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Birth Date: </label>
+                    </td>
+                    <td th:text="${birthDate}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Deceased Date: </label>
+                    </td>
+                    <td th:text="${deceasedDate}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Education: </label>
+                    </td>
+                    <td th:text="*{education}"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Summary: </label>
+                    </td>
+                    <td th:text="*{summary}"></td>
+                </tr>
+            </table>
+        </form>
+        <div class="grid-container">
+            <section>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Category</th>
+                            <th>Is Borrowed</th>
+                            <th>Release Date</th>
+                            <th>Total Page</th>
+                        </tr>
+                        <tr th:each="book : ${books}">
+                            <td th:text="${book.title}"></td>
+                            <td th:text="${book.categoryName}"></td>
+                            <td th:text="${book.isBorrowed}"></td>
+                            <td th:text="${book.releaseDate}"></td>
+                            <td th:text="${book.totalPage}"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="pagination">
+                                    <div th:text="|Page ${page} of ${totalPage}|"></div>
+                                    <div>
+                                        <a th:each="pageLoop : ${#numbers.sequence(1, (totalPage < 1) ? 1 : totalPage)}"
+                                           th:href="@{/author/books(page=${pageLoop})}"
+                                           th:text="${pageLoop}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>

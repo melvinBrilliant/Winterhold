@@ -1,8 +1,10 @@
 package melvin.mvc.winterhold.service.author;
 
 import melvin.mvc.winterhold.dao.AuthorRepository;
+import melvin.mvc.winterhold.dao.BookRepository;
 import melvin.mvc.winterhold.dto.author.AuthorDto;
 import melvin.mvc.winterhold.dto.author.UpsertAuthorDto;
+import melvin.mvc.winterhold.dto.book.BookByAuthorDetailsDto;
 import melvin.mvc.winterhold.model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,11 +13,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 @Service
 public class AuthorService implements IAuthorService{
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
     private final int PAGE_LIMIT = 5;
 
     @Override
@@ -58,5 +67,16 @@ public class AuthorService implements IAuthorService{
     @Override
     public void deleteAuthorById(Long id) {
         authorRepository.deleteById(id);
+    }
+
+    public String dateFormatIndonesia(LocalDate date) {
+        DateTimeFormatter formatIndo = DateTimeFormatter.ofPattern(
+                "dd MMMM yyyy", new Locale("id", "ID"));
+        return formatIndo.format(date);
+    }
+
+    public Page<BookByAuthorDetailsDto> findBooksByAuthor(Long authorId, Integer page) {
+        Pageable pageable = PageRequest.of(page - 1, PAGE_LIMIT, Sort.by("id"));
+        return bookRepository.findAllAuthorBooks(authorId, pageable);
     }
 }
