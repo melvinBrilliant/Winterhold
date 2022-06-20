@@ -75,6 +75,7 @@ public class AuthorService implements IAuthorService{
         return formatIndo.format(date);
     }
 
+    @Override
     public Page<BookByAuthorDetailsDto> findBooksByAuthor(Long authorId, Integer page) {
         Pageable pageable = PageRequest.of(page - 1, PAGE_LIMIT, Sort.by("id"));
         return bookRepository.findAllAuthorBooks(authorId, pageable);
