@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main-body">
+
+    <nav th:replace="~{main-body :: navigation}"></nav>
+    <header th:replace="~{main-body :: header(${breadCrumbs})}"></header>
+
+    <main>
+        <div class="grid-container"></div>
+    </main>
+
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
+
+</body>
+</html>

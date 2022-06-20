@@ -1,5 +1,6 @@
 package melvin.mvc.winterhold.controller;
 
+import melvin.mvc.winterhold.dto.book.BookByCateogryDto;
 import melvin.mvc.winterhold.dto.category.CategoryDto;
 import melvin.mvc.winterhold.dto.category.CategoryGridDto;
 import melvin.mvc.winterhold.dto.category.CategoryUpsertDto;
@@ -81,5 +82,22 @@ public class CategoryController {
             }
         }
         return "redirect:/category/index";
+    }
+
+    @GetMapping("books")
+    public String categoryBooks(@RequestParam(required = false) String categoryName,
+                                @RequestParam(defaultValue = "") String bookTitle,
+                                @RequestParam(defaultValue = "") String authorName,
+                                @RequestParam(defaultValue = "1") int page,
+                                Model model) {
+        Page<BookByCateogryDto> allBooksByCategory = service.findBookByCategory(categoryName, bookTitle, authorName, page);
+        List<BookByCateogryDto> booksByCategoryGrid = allBooksByCategory.getContent();
+        model.addAttribute("bookTitle", bookTitle);
+        model.addAttribute("authorName", authorName);
+        model.addAttribute("categoryBooks", booksByCategoryGrid);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", allBooksByCategory.getTotalPages());
+        model.addAttribute("breadCrumbs", "CATEGORY: " + categoryName);
+        return "category/category-book";
     }
 }

@@ -37,7 +37,8 @@
                     </tr>
                     <tr th:each="category : ${categories}">
                         <td>
-                            <a href="" class="blue-button">Books</a>
+                            <a th:href="@{/category/books(categoryName = ${category.categoryName})}"
+                               class="blue-button">Books</a>
                             <a th:href="@{/category/upsert-form(categoryName = ${category.categoryName})}"
                                class="blue-button">Edit</a>
                             <a th:href="@{/category/delete(categoryName = ${category.categoryName})}"

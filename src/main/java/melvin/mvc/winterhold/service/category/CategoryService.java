@@ -1,6 +1,8 @@
 package melvin.mvc.winterhold.service.category;
 
+import melvin.mvc.winterhold.dao.BookRepository;
 import melvin.mvc.winterhold.dao.CategoryRepository;
+import melvin.mvc.winterhold.dto.book.BookByCateogryDto;
 import melvin.mvc.winterhold.dto.category.CategoryDto;
 import melvin.mvc.winterhold.dto.category.CategoryGridDto;
 import melvin.mvc.winterhold.dto.category.CategoryUpsertDto;
@@ -17,6 +19,8 @@ public class CategoryService implements ICategoryService{
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private BookRepository bookRepository;
     private final int PAGE_LIMIT = 5;
 
     @Override
@@ -52,5 +56,11 @@ public class CategoryService implements ICategoryService{
     @Override
     public void deleteCategoryById(String categoryName) {
         categoryRepository.deleteById(categoryName);
+    }
+
+    @Override
+    public Page<BookByCateogryDto> findBookByCategory(String categoryName, String bookTitle, String authorName, Integer page) {
+        Pageable pageable = PageRequest.of(page - 1, PAGE_LIMIT, Sort.by("id"));
+        return bookRepository.findAllBooksInCategory(categoryName, bookTitle, authorName, pageable);
     }
 }
