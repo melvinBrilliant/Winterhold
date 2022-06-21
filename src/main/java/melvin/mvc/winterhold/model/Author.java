@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -43,5 +42,9 @@ public class Author {
 
     @OneToMany(mappedBy = "author")
     private Set<Book> books = new LinkedHashSet<>();
+
+    public String fetchFullName() {
+        return title + ". " + firstName + " " + lastName;
+    }
 
 }

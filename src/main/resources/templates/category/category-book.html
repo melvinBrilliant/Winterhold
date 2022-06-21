@@ -19,7 +19,8 @@
                 <button type="submit" class="blue-button">Search</button>
             </form>
 
-            <a href="" class="blue-button create-button">Insert New Book</a>
+            <a th:href="@{/category/books/upsert-form(categoryName=${categoryName})}"
+               class="blue-button create-button">Insert New Book</a>
 
             <table>
                 <tbody>
@@ -33,12 +34,13 @@
                     </tr>
                     <tr th:each="book : ${categoryBooks}">
                         <td>
-                            <a href="" class="blue-button">Books</a>
+                            <a th:href="@{/category/books/upsert-form(categoryName = ${categoryName})}"
+                               class="blue-button">Books</a>
                             <a href="" class="blue-button">Edit</a>
                             <a href="" class="blue-button">Delete</a>
                         </td>
-                        <td th:text="${book.title}"></td>
-                        <td th:text="${book.auhtorName}"></td>
+                        <td th:text="${book.bookTitle}"></td>
+                        <td th:text="${book.authorName}"></td>
                         <td th:text="${book.isBorrowed}"></td>
                         <td th:text="${book.releaseDate}"></td>
                         <td th:text="${book.totalPage}"></td>

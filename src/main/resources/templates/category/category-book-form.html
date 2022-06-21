@@ -8,11 +8,81 @@
 </head>
 <body class="main-body">
 
-    <nav th:replace="~{main-body :: navigation}"></nav>
-    <header th:replace="~{main-body :: header(${breadCrumbs})}"></header>
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
 
     <main>
-        <div class="grid-container"></div>
+        <form th:action="@{/category/books/upsert(categoryName=${categoryName})}"
+              th:object="${book}" method="post" class="upsert-form">
+            <table>
+                <tr>
+                    <td>
+                        <label>Code*: </label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{code}" name="bookCode">
+                        <div class="field-validation-error" th:errors="*{code}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Title*: </label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{title}" name="title">
+                        <div class="field-validation-error" th:errors="*{title}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Category*: </label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="${categoryName}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Author*: </label>
+                    </td>
+                    <td>
+                        <select th:field="*{authorId}">
+                            <option th:value="null">-Select Author-</option>
+                            <option th:each="author : ${authors}"
+                                    th:value="${author.id}"
+                                    th:selected="${author.id} == *{authorId}"
+                                    th:text="${author.fullName}"></option>
+                        </select>
+                        <div class="field-validation-error" th:errors="*{authorId}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Release Date: </label>
+                    </td>
+                    <td>
+                        <input type="date" th:field="*{releaseDate}" name="releaseDate">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Total Page:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{totalPage}" name="totalPage">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Summary: </label>
+                    </td>
+                    <td>
+                        <textarea name="summary" th:field="*{summary}"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="blue-button create-button">SAVE</button>
+        </form>
     </main>
 
     <footer th:replace="~{main-layout :: footer}"></footer>

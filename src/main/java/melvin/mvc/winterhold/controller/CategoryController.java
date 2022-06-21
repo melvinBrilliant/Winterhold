@@ -1,6 +1,8 @@
 package melvin.mvc.winterhold.controller;
 
+import melvin.mvc.winterhold.dto.author.AuthorDropDownDto;
 import melvin.mvc.winterhold.dto.book.BookByCateogryDto;
+import melvin.mvc.winterhold.dto.book.UpsertBookDto;
 import melvin.mvc.winterhold.dto.category.CategoryDto;
 import melvin.mvc.winterhold.dto.category.CategoryGridDto;
 import melvin.mvc.winterhold.dto.category.CategoryUpsertDto;
@@ -94,10 +96,49 @@ public class CategoryController {
         List<BookByCateogryDto> booksByCategoryGrid = allBooksByCategory.getContent();
         model.addAttribute("bookTitle", bookTitle);
         model.addAttribute("authorName", authorName);
+        model.addAttribute("categoryName", categoryName);
         model.addAttribute("categoryBooks", booksByCategoryGrid);
         model.addAttribute("page", page);
         model.addAttribute("totalPage", allBooksByCategory.getTotalPages());
         model.addAttribute("breadCrumbs", "CATEGORY: " + categoryName);
         return "category/category-book";
+    }
+
+    @GetMapping("books/upsert-form")
+    public String upsertBooks(@RequestParam(required = false) String bookId,
+                              @RequestParam String categoryName,
+                              Model model) {
+        List<AuthorDropDownDto> authors = service.findAllAuthors();
+        model.addAttribute("authors", authors);
+        model.addAttribute("categoryName", categoryName);
+        if (bookId != null) {
+            model.addAttribute("book", service.findBookById(bookId));
+            model.addAttribute("breadCrumbs", "BOOK / UPDATE BOOK");
+        } else {
+            model.addAttribute("book", new UpsertBookDto());
+            model.addAttribute("breadCrumbs", "BOOK / INSERT NEW BOOK");
+        }
+        return "category/category-book-form";
+    }
+
+    @PostMapping("books/upsert")
+    public String upsert(@Valid @ModelAttribute("book") UpsertBookDto bookDto,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.getRawFieldValue("bookId") == "") {
+                model.addAttribute("breadCrumbs", "BOOK / INSERT NEW BOOK");
+            } else {
+                model.addAttribute("breadCrumbs", "BOOK / UPDATE BOOK");
+            }
+            model.addAttribute("book", bookDto);
+            return "category/category-book-form";
+        }
+        service.saveBook(bookDto);
+        redirectAttributes.addFlashAttribute("SUCCESS",
+                "Book has been saved");
+        return "redirect:/category/index";
+        // todo: redirect ke halaman index book by category recent
     }
 }
