@@ -1,5 +1,6 @@
 package melvin.mvc.winterhold.service.customer;
 
+import melvin.mvc.winterhold.dto.customer.CustomerDetailGridDto;
 import melvin.mvc.winterhold.dto.customer.CustomerGridDto;
 import melvin.mvc.winterhold.dto.customer.UpsertCustomerDto;
 import org.springframework.data.domain.Page;
@@ -10,4 +11,5 @@ public interface ICustomerService {
     UpsertCustomerDto findCustomerById(String membershipNumber); // membershipNumber = id
     void deleteCustomerById(String membershipNumber);
     void extendMembership(String membershipNumber);
+    CustomerDetailGridDto showDetailCustomer(String membershipNumber);
 }

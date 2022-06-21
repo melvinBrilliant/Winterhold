@@ -43,7 +43,8 @@
                                class="blue-button">Extend</a>
                         </td>
                         <td>
-                            <a href="" th:text="${customer.membershipNumber}"></a>
+                            <a th:href="@{/customer/detail(membershipNumber = ${customer.membershipNumber})}"
+                               th:text="${customer.membershipNumber}"></a>
                         </td>
                         <td th:text="${customer.fullName}"></td>
                         <td th:text="${customer.membershipExpireDate}"></td>

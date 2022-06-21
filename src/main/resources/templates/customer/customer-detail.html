@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main-body">
+
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+
+    <main>
+        <form class="upsert-form">
+            <table th:object="${customer}">
+                <tr>
+                    <td>
+                        <label>Membership Number: </label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="*{membershipNumber}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Full Name: </label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="*{fullName}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Birth Date:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="*{birthDate}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Gender:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="*{gender}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Phone:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:value="*{phone}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Address:</label>
+                    </td>
+                    <td>
+                        <input th:value="*{address}" readonly>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </main>
+
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
+
+</body>
+</html>

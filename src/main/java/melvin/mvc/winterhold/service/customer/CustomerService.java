@@ -1,6 +1,7 @@
 package melvin.mvc.winterhold.service.customer;
 
 import melvin.mvc.winterhold.dao.CustomerRepository;
+import melvin.mvc.winterhold.dto.customer.CustomerDetailGridDto;
 import melvin.mvc.winterhold.dto.customer.CustomerGridDto;
 import melvin.mvc.winterhold.dto.customer.UpsertCustomerDto;
 import melvin.mvc.winterhold.model.Customer;
@@ -70,5 +71,20 @@ public class CustomerService implements ICustomerService{
                 newExpireDate
         );
         customerRepository.save(customer);
+    }
+
+    @Override
+    public CustomerDetailGridDto showDetailCustomer(String membershipNumber) {
+        Customer customer = customerRepository.findById(membershipNumber)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        return new CustomerDetailGridDto(
+                customer.getId(), // membershipNumber
+                customer.fetchFullName(),
+                customer.birthDateFormatted(),
+                customer.getGender(),
+                customer.getPhone(),
+                customer.getAddress()
+        );
     }
 }

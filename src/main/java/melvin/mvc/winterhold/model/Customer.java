@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Builder
@@ -44,5 +46,23 @@ public class Customer {
 
     @OneToMany(mappedBy = "customerNumber")
     private Set<Loan> loans = new LinkedHashSet<>();
+
+    public String fetchFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String birthDateFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                "MMMM dd yyyy", new Locale("en", "EN")
+        );
+        return formatter.format(birthDate);
+    }
+
+    public String membershipExpireDateFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                "MMMM dd yyyy", new Locale("en", "EN")
+        );
+        return formatter.format(birthDate);
+    }
 
 }

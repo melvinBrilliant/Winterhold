@@ -100,4 +100,12 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
+    @GetMapping("detail")
+    public String detail(@RequestParam(required = false) String membershipNumber,
+                         Model model) {
+        model.addAttribute("customer", service.showDetailCustomer(membershipNumber));
+        model.addAttribute("breadCrumbs", "CUSTOMER / DETAIL");
+        return "customer/customer-detail";
+    }
+
 }
