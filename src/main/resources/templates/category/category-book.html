@@ -20,7 +20,8 @@
             </form>
 
             <a th:href="@{/category/books/upsert-form(categoryName=${categoryName})}"
-               class="blue-button create-button">Insert New Book</a>
+               class="blue-button create-button"
+               th:text="${'Insert New ' + categoryName + ' Book'}"></a>
 
             <table>
                 <tbody>

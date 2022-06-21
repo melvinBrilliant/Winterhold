@@ -10,12 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface BookRepository extends JpaRepository<Book, String> {
     @Query(value = """
-            SELECT new melvin.mvc.winterhold.dto.author.AuthorBookGridDto (
+            SELECT new melvin.mvc.winterhold.dto.book.BookByAuthorDetailsDto (
                 b.id,
                 b.title,
                 c.id,
-                a.id,
-                CONCAT(a.title, '. ', a.firstName, ' ', a.lastName),
                 b.isBorrowed,
                 b.releaseDate,
                 b.totalPage

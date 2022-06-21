@@ -126,6 +126,7 @@ public class CategoryController {
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
                          Model model) {
+        String categoryName = bookDto.getCategoryName();
         if (bindingResult.hasErrors()) {
             if (bindingResult.getRawFieldValue("bookId") == "") {
                 model.addAttribute("breadCrumbs", "BOOK / INSERT NEW BOOK");
@@ -138,7 +139,6 @@ public class CategoryController {
         service.saveBook(bookDto);
         redirectAttributes.addFlashAttribute("SUCCESS",
                 "Book has been saved");
-        return "redirect:/category/index";
-        // todo: redirect ke halaman index book by category recent
+        return "redirect:/category/books?categoryName=" + categoryName;
     }
 }
