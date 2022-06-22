@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Data
 public class LoanGridDto implements Serializable {
+    private final Long id;
     private final String bookTitle;
     private final String customerName;
     private final LocalDate loanDate;

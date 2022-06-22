@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main-body">
+
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${breadCrumbs})}"></header>
+
+    <main>
+        <form th:action="@{/loan/upsert(loanId=${loanId})}"
+              th:object="${loan}" method="post" class="upsert-form">
+            <input th:field="*{loanId}" type="hidden">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Customer*: </label>
+                        </td>
+                        <td>
+                            <select th:field="*{customerNumberId}">
+                                <option th:value="null">-Select Customer-</option>
+                                <option th:each="customer : ${customers}"
+                                        th:selected="${customer.membershipNumber} == *{customerNumberId}"
+                                        th:value="${customer.membershipNumber}"
+                                        th:text="${customer.fullName}"></option>
+                            </select>
+                            <div class="field-validation-error" th:errors="*{customerNumberId}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Book*: </label>
+                        </td>
+                        <td>
+                            <select th:field="*{bookCodeId}">
+                                <option th:value="null">-Select Book-</option>
+                                <option th:each="book : ${books}"
+                                        th:selected="${book.bookId}"
+                                        th:text="${book.bookTitle}"
+                                        th:value="${book.bookId}"></option>
+                            </select>
+                            <div class="field-validation-error" th:errors="*{bookCodeId}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Loan Date*: </label>
+                        </td>
+                        <td>
+                            <input type="date" th:field="*{loanDate}" name="loanDate">
+                            <div class="field-validation-error" th:errors="*{loanDate}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Note: </label>
+                        </td>
+                        <td>
+                            <textarea name="note" th:field="*{note}"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="blue-button create-button">SAVE</button>
+        </form>
+    </main>
+
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
+
+</body>
+</html>

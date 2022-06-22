@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query("""
             SELECT new melvin.mvc.winterhold.dto.loan.LoanGridDto (
+                l.id,
                 b.title,
                 CONCAT(c.firstName, ' ', c.lastName),
                 l.loanDate,
