@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{main-layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main-body">
+
+    <nav th:replace="~{main-layout :: navigation}"></nav>
+    <header th:replace="~{main-layout :: header(${'WINTERHOLD / HOME'})}"></header>
+
+    <main>
+        <form class="upsert-form">
+            <center><h1>Winter Hold Library</h1></center>
+            <center><p>Knowledge is the best weapon you have, please</p></center>
+            <center><p>find some fascinating books we have.</p></center>
+            <center><p>This app will help you do that, as long as you</p></center>
+            <center><p>keep extend your membership!</p></center>
+            <center><p>(its totally free!)</p></center>
+        </form>
+    </main>
+
+    <footer th:replace="~{main-layout :: footer}"></footer>
+    <th:block th:replace="~{main-layout :: javascript}"></th:block>
+
+</body>
+</html>
